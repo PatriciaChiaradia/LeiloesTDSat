@@ -4,30 +4,20 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
 
-
-
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
-
-/**
- *
- * @author Adm
- */
 public class conectaDAO {
+     /**Variável de conexão*/
+    Connection conn = null;
     
-    public Connection connectDB(){
-        Connection conn = null;
+    /**Método para estabelecer a conexão com o banco de dado
+     * @return s*/
+    public Connection conectar(){
         
         try {
-        
-            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/uc11","root","Kiara1985");
-            
+            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/uc11?useSSL=false","root","Kiara1985");
+            return conn;    
         } catch (SQLException erro){
             JOptionPane.showMessageDialog(null, "Erro ConectaDAO" + erro.getMessage());
+            return null;
         }
-        return conn;
-    }
-    
+    } 
 }

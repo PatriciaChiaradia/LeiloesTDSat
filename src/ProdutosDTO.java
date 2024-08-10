@@ -1,18 +1,24 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 
-/**
- *
- * @author Adm
- */
 public class ProdutosDTO {
+    
+    //Declaração de atributos:
     private Integer id;
     private String nome;
     private Integer valor;
     private String status;
+    
+    //Métodos construtores:
+    public ProdutosDTO() {
+    }
 
+    public ProdutosDTO(Integer id, String nome, Integer valor, String status) {
+        this.id = id;
+        this.nome = nome;
+        this.valor = valor;
+        this.status = status;
+    }
+    
+    //Métodos getters e setters:
     public Integer getId() {
         return id;
     }
@@ -43,6 +49,5 @@ public class ProdutosDTO {
 
     public void setStatus(String status) {
         this.status = status;
-    }
-    
+    } 
 }
