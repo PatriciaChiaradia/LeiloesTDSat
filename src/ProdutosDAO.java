@@ -5,6 +5,7 @@ import javax.swing.JOptionPane;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.sql.SQLException;
+import java.util.List;
 
 
 public class ProdutosDAO {
@@ -19,12 +20,13 @@ public class ProdutosDAO {
     }
     
     public void cadastrarProduto (ProdutosDTO produto){
-        String sql = "INSERT INTO produtos(nome, valor) VALUES (?,?)";
+        String sql = "INSERT INTO produtos(nome, valor,status) VALUES (?,?,?)";
         try{
             ps = this.conn.prepareStatement(sql);
             
             ps.setString(1, produto.getNome());
             ps.setInt(2, produto.getValor());
+            ps.setString(3,produto.getStatus());
             
             ps.execute();
             
@@ -44,13 +46,30 @@ public class ProdutosDAO {
         }
     }
     
-    public ArrayList<ProdutosDTO> listarProdutos(){
-        
-        return listagem;
-    }
-    
-    
-    
-        
+    public List<ProdutosDTO> listarProdutos(){
+        String sql = "SELECT * FROM produtos";
+        try{
+            PreparedStatement pst = this.conn.prepareStatement(sql);
+            ResultSet rs = pst.executeQuery();
+            
+            List<ProdutosDTO> listaProdutos = new ArrayList<>();
+            
+            while(rs.next()){
+                ProdutosDTO produtosDTO = new ProdutosDTO();
+                
+                produtosDTO.setId(rs.getInt("id"));
+                produtosDTO.setNome(rs.getString("nome"));
+                produtosDTO.setValor(rs.getInt("valor"));
+                produtosDTO.setStatus(rs.getString("status"));
+                
+                listaProdutos.add(produtosDTO);
+            }
+        return listaProdutos;
+                    
+        }catch(SQLException sqle){
+            System.out.println("Erro ao buscar produtos: " + sqle.getMessage());
+            return new ArrayList<>();
+        }
+    }       
 }
 

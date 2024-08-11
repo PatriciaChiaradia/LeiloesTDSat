@@ -154,6 +154,7 @@ public class cadastroVIEW extends javax.swing.JFrame {
         
         produto.setNome(nome);
         produto.setValor(valor);
+        produto.setStatus("A Venda");
         
         ProdutosDAO produtosDAO = new ProdutosDAO();
         produtosDAO.cadastrarProduto(produto);
