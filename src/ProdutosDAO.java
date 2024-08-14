@@ -13,7 +13,6 @@ public class ProdutosDAO {
     private Connection conn;
     PreparedStatement ps;
     ResultSet rs;
-    ArrayList<ProdutosDTO> listagem = new ArrayList<>();
     
     public ProdutosDAO() {
         this.conn = new conectaDAO().conectar();
@@ -46,6 +45,8 @@ public class ProdutosDAO {
         }
     }
     
+    //--------------------------------------------------------------------------------------
+    
     public List<ProdutosDTO> listarProdutos(){
         String sql = "SELECT * FROM produtos";
         try{
@@ -70,6 +71,27 @@ public class ProdutosDAO {
             System.out.println("Erro ao buscar produtos: " + sqle.getMessage());
             return new ArrayList<>();
         }
-    }       
+    } 
+    
+    //--------------------------------------------------------------------------------------
+    
+       public void venderProdutos(int id) {
+        String sql = "UPDATE produtos SET status = 'Vendido' WHERE id = ?";
+        try {
+            ps = this.conn.prepareStatement(sql);
+            ps.setInt(1, id);
+            ps.executeUpdate();
+            JOptionPane.showMessageDialog(null, "Produto vendido com sucesso!");
+        } catch (SQLException sqle) {
+            System.out.println("Erro ao finalizar a ordem de serviço: " + sqle.getMessage());
+        } finally {
+            try {
+                if (ps != null) ps.close();
+                if (conn != null) conn.close();
+            } catch (SQLException e) {
+                System.out.println("Erro ao fechar conexão: " + e.getMessage());
+            }
+        }
+    }
 }
 
