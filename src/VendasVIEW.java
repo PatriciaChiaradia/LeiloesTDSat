@@ -1,8 +1,13 @@
 
+import java.util.List;
+import javax.swing.table.DefaultTableModel;
+
+
 public class VendasVIEW extends javax.swing.JFrame {
 
     public VendasVIEW() {
         initComponents();
+        listarProdutosVendidos();
     }
 
     @SuppressWarnings("unchecked")
@@ -136,4 +141,25 @@ public class VendasVIEW extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tblListaVendidos;
     // End of variables declaration//GEN-END:variables
+
+    private void listarProdutosVendidos(){
+        try {
+            ProdutosDAO produtosdao = new ProdutosDAO();
+            
+            DefaultTableModel model = (DefaultTableModel) tblListaVendidos.getModel();
+            model.setNumRows(0);
+            
+            List<ProdutosDTO> listagem = produtosdao.listarProdutosVendidos();
+            
+            for(int i = 0; i < listagem.size(); i++){
+                model.addRow(new Object[]{
+                    listagem.get(i).getId(),
+                    listagem.get(i).getNome(),
+                    listagem.get(i).getValor(),
+                    listagem.get(i).getStatus()
+                });
+            }
+        } catch (Exception e) {
+        }
+    }
 }
